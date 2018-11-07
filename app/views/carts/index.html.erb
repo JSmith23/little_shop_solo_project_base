@@ -15,7 +15,7 @@
   <tbody>
     <% @items.each do |item| %>
       <tr id="item-<%= item.id %>">
-        <td><%= link_to item.name, item_path(item) %></td>
+        <td><%= link_to item.name, item_path(id: item.slug) %></td>
         <td>
           <img id="item-image-<%= item.id %>" alt="image for <%= item.name %>" src="<%= item.image %>" width="200" />
         </td>
