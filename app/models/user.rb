@@ -106,6 +106,17 @@ class User < ApplicationRecord
       .limit(quantity)
   end
 
+  def self.top_fulfilled_merchants_since(since, quantity = 10)
+    joins(items: :orders)
+      .where(orders: { status: :completed })
+      .where('orders.created_at > ?', since)
+      .select('users.*, COUNT(orders.id) as total_orders_count')
+      .order('total_orders_count DESC')
+      .group(:id)
+      .distinct
+      .limit(quantity)
+  end
+
   def self.top_merchants(quantity)
     select('distinct users.*, sum(order_items.quantity*order_items.price) as total_earned')
       .joins(:items)
