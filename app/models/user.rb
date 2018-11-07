@@ -9,6 +9,10 @@ class User < ApplicationRecord
 
   enum role: %w(user merchant admin)
 
+  def path_keys
+    { id: slug || id }
+  end
+
   def merchant_orders(status=nil)
     if status.nil?
       Order.distinct.joins(:items).where('items.user_id=?', self.id)
@@ -93,6 +97,10 @@ class User < ApplicationRecord
       .group(:id)
       .order('total_spent desc')
       .limit(quantity)
+  end
+
+  def self.slug_find(id)
+    find_by!('slug = ? OR id = ?', id, id.to_i)
   end
 
   def self.top_sold_merchants_since(since, quantity = 10)

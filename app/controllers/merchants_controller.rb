@@ -20,7 +20,7 @@ class MerchantsController < ApplicationController
     if current_admin?
       @orders = current_user.merchant_orders
       if @merchant.user?
-        redirect_to user_path(@merchant)
+        redirect_to user_path(@merchant.path_keys)
       end
     elsif current_user != @merchant
       render file: 'errors/not_found', status: 404

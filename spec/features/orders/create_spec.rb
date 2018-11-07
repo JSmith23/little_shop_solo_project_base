@@ -10,9 +10,9 @@ RSpec.describe 'Create Order' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
       item_1, item_2 = create_list(:item, 2, user: merchant)
-      visit item_path(id: item_1.slug)
+      visit item_path(item_1.path_keys)
       click_button("Add to Cart")
-      visit item_path(id: item_2.slug)
+      visit item_path(item_2.path_keys)
       click_button("Add to Cart")
 
       visit carts_path

@@ -38,7 +38,7 @@ RSpec.describe 'Items Index' do
     end
     describe 'visiting /items/:id' do
       it 'should show all item content plus a button to add to cart' do
-        visit item_path(id: @active_item.slug)
+        visit item_path(@active_item.path_keys)
 
         expect(page).to have_content("Merchant: #{@active_item.user.name}")
         expect(page).to have_content(@active_item.name)

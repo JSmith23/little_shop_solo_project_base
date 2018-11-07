@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe 'Admin-only merchant management' do 
+RSpec.describe 'Admin-only merchant management' do
   before(:each) do
     @admin = create(:admin)
     @active_merchant = create(:merchant)
@@ -12,7 +12,7 @@ RSpec.describe 'Admin-only merchant management' do
     fill_in :email, with: @admin.email
     fill_in :password, with: @admin.password
     click_button 'Log in'
-  
+
     visit merchants_path
 
     within "#merchant-#{@active_merchant.id}" do
@@ -54,7 +54,7 @@ RSpec.describe 'Admin-only merchant management' do
     fill_in :email, with: @inactive_merchant.email
     fill_in :password, with: @inactive_merchant.password
     click_button 'Log in'
-    
+
     expect(current_path).to eq(profile_path)
   end
 
@@ -68,16 +68,16 @@ RSpec.describe 'Admin-only merchant management' do
     visit merchant_path(@active_merchant)
     expect(page.status_code).to eq(404)
   end
-  describe 'redirects admin users to a proper page' do 
+  describe 'redirects admin users to a proper page' do
     scenario 'when a user path is really a merchant' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
-      visit user_path(@active_merchant.id)
+      visit user_path(@active_merchant.path_keys)
       expect(current_path).to eq(merchant_path(@active_merchant.id))
     end
     scenario 'when a merchant path is really a user' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(@admin)
       visit merchant_path(@user.id)
-      expect(current_path).to eq(user_path(@user))
+      expect(current_path).to eq(user_path(@user.path_keys))
     end
   end
 end

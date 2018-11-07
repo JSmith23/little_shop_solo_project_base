@@ -79,15 +79,15 @@
 <% @items.each do |item| %>
 
 <div class="card float-left m-3" style="width: 18rem;">
-  <a href="<%= item_path(id: item.slug || item.id) %>">
+  <a href="<%= item_path(item.path_keys) %>">
   <img class="card-img-top" id="item-image-<%= item.id %>" alt="image for <%= item.name %>" src="<%= item.image %>" width="200" />
   </a>
 
   <div class="card-body" id="item-<%= item.id %>">
     <h5 class="card-title">
-      <%= link_to item.name, item_path(id: item.slug || item.id), class: 'card-link' %>
+      <%= link_to item.name, item_path(item.path_keys), class: 'card-link' %>
       <% if current_admin? || current_user == item.user %>
-      <%= link_to "ID: #{item.id}", item_path(id: item.slug || item.id) %>
+      <%= link_to "ID: #{item.id}", item_path(item.path_keys) %>
       <% end %>
     </h5>
     <img class="card-img-top" id="item-image-<%= item.id %>" alt="image for <%= item.name %>" src="<%= item.image %>" width="0" />

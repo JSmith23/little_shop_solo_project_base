@@ -1,5 +1,5 @@
 <h1>
-  Welcome, 
+  Welcome,
     <%= @user.name if current_user == @user %>
     <%= @user.name if current_admin? %>
 </h1>
@@ -14,7 +14,7 @@
       <%= @user.zip %></td></tr>
   </table>
 
-  <p><%= link_to "Edit Profile Data", current_admin? ? edit_user_path(@user) : profile_edit_path %></p>
+  <p><%= link_to "Edit Profile Data", current_admin? ? edit_user_path(@user.path_keys) : profile_edit_path %></p>
 </div>
 
 <% unless @user.orders.empty? %>
@@ -23,9 +23,9 @@
 
 <% if current_admin? %>
   <% if @user.active %>
-  <%= button_to "Disable", user_path(@user), method: :patch, params: { toggle: :disable } %>
+  <%= button_to "Disable", user_path(@user.path_keys), method: :patch, params: { toggle: :disable } %>
   <% else %>
-  <%= button_to "Enable", user_path(@user), method: :patch, params: { toggle: :enable } %>
+  <%= button_to "Enable", user_path(@user.path_keys), method: :patch, params: { toggle: :enable } %>
   <% end %>
-  <%= button_to "Upgrade to Merchant", user_path(@user), method: :patch, params: { toggle: :role } %> 
+  <%= button_to "Upgrade to Merchant", user_path(@user.path_keys), method: :patch, params: { toggle: :role } %>
 <% end %>
