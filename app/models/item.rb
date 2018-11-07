@@ -18,7 +18,7 @@ class Item < ApplicationRecord
   end
 
   def self.slug_find(id)
-    find_by!('slug = ? OR id = ?', id, id.to_i)
+    find_by('slug = ? OR id = ?', id, id.to_i)
   end
 
   def self.popular_items(quantity)

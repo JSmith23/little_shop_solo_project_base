@@ -100,7 +100,7 @@ class User < ApplicationRecord
   end
 
   def self.slug_find(id)
-    find_by!('slug = ? OR id = ?', id, id.to_i)
+    find_by('slug = ? OR id = ?', id, id.to_i)
   end
 
   def self.top_sold_merchants_since(since, quantity = 10)

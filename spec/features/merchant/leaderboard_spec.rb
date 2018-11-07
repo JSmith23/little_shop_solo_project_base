@@ -4,9 +4,6 @@ RSpec.describe 'Merchant Leader boards' do
   context 'as any user' do
     describe 'top by items quantity' do
       let!(:this_month_merchants) do
-        # NOTE: it creates and item for each merchant and creates an order for each items
-        # so that the index + 1 is quantity of that item in the order
-        # so in result we have 15 merchants with 15, 14, ..., 1 items sold
         create_list(:merchant, 15).each_with_index do |merchant, i|
           item = create(:item, user: merchant)
           order = create(:completed_order, user: merchant)
