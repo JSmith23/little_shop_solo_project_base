@@ -1,5 +1,11 @@
 <h1>Merchants</h1>
 
+<div class="leaderboards">
+  <h2>Leaderboards</h2>
+  <%= render 'leaderboard', id: "most_sold", title: 'Merchants who sold the most items in the past month', users: @top_sold_merchants_for_past_month %>
+</div>
+
+<br />
 <table>
   <thead>
     <tr>

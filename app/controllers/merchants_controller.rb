@@ -4,7 +4,8 @@ class MerchantsController < ApplicationController
       @merchants = User.where(role: :merchant).order(:name)
     else
       @merchants = User.where(role: :merchant, active: true).order(:name)
-    end 
+    end
+    @top_sold_merchants_for_past_month = User.top_sold_merchants_since(1.month.ago) 
   end
 
   def show

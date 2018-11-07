@@ -1,0 +1,14 @@
+<div id="<%= id %>" class="card float-left m-3" style="width: 25rem;">
+  <div class="card-body">
+    <h5 class="card-title"><%= title %></h5>
+    <% if users.present? %>
+      <ul>
+        <% users.each do |user| %>
+          <li><%= user.name %></li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p>(none yet)</p>
+    <% end %>
+  </div>
+</div>
