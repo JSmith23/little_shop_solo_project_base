@@ -155,6 +155,25 @@ class User < ApplicationRecord
       .limit(quantity)
   end
 
+  def self.top_fastest_merchants_in(location_filter)
+    joins(items: { orders: :user })
+      .where(users_orders: location_filter)
+      .where(orders: { status: :completed })
+      .select(
+        <<-SQL
+          users.*,
+          AVG (
+            CASE
+              WHEN order_items.updated_at > order_items.created_at THEN coalesce(EXTRACT(EPOCH FROM order_items.updated_at) - EXTRACT(EPOCH FROM order_items.created_at),0)
+              ELSE 1000000000 END
+          ) as avg_time_diff
+        SQL
+      )
+      .group(:id)
+      .order('avg_time_diff')
+      .limit(5)
+  end
+
   def self.fastest_merchants(quantity)
     merchant_by_speed(quantity, :asc)
   end
