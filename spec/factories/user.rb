@@ -3,6 +3,7 @@ FactoryBot.define do
     sequence(:email) { |n| "user_#{n}@gmail.com" }
     sequence(:password) { |n| "Password #{n}" }
     sequence(:name) { |n| "User #{n}" }
+    sequence(:slug) { |n| "slug_#{n}" }
     sequence(:address) { |n| "Address #{n}" }
     sequence(:city) { |n| "City #{n}" }
     sequence(:state) { |n| "State #{n}" }

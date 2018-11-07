@@ -16,10 +16,12 @@
     <%= f.text_field :name, {id: :item_name, required: true} %>
   </div>
 
-  <div class="field">
-    <%= f.label :slug %>
-    <%= f.text_field :slug, {id: :item_slug, required: true} %>
-  </div>
+  <% if current_admin? %>
+    <div class="field">
+      <%= f.label :slug %>
+      <%= f.text_field :slug, {id: :item_slug, required: true} %>
+    </div>
+  <% end %>
 
   <div class="field">
     <%= f.label :description %>
