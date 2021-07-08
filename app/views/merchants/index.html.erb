@@ -1,5 +1,17 @@
 <h1>Merchants</h1>
 
+<div class="leaderboards">
+  <h2>Leaderboards</h2>
+  <%= render 'leaderboard', id: "most_sold", title: 'Merchants who sold the most items in the past month', users: @top_sold_merchants_for_past_month %>
+  <%= render 'leaderboard', id: "most_fulfilled", title: 'Merchants who fulfilled non-cancelled orders in the past month', users: @top_fulfilled_merchants_for_past_month %>
+  <% if current_user.present? %>
+    <%= render 'leaderboard', id: "fastest_fulfilled_in_state", title: 'Merchants who have fulfilled items the fastest to your state', users: @top_fastest_merchants_in_user_state %>
+    <%= render 'leaderboard', id: "fastest_fulfilled_in_city", title: 'Merchants who have fulfilled items the fastest to your city', users: @top_fastest_merchants_in_user_city %>
+  <% end %>
+
+</div>
+
+<br />
 <table>
   <thead>
     <tr>

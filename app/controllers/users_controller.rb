@@ -10,7 +10,7 @@ class UsersController < ApplicationController
       @user = current_user
     else # '/users/:id
       if current_admin?
-        @user = User.find(params[:id])
+        @user = User.slug_find(params[:id])
         if @user.merchant?
           redirect_to merchant_path(@user.id)
         end
@@ -29,7 +29,7 @@ class UsersController < ApplicationController
     if current_user
       @user = current_user
       if current_admin? && params[:id]
-        @user = User.find(params[:id])
+        @user = User.slug_find(params[:id])
       elsif current_user && params[:id] && current_user.id != params[:id]
         render file: 'errors/not_found', status: 404
       end
@@ -40,7 +40,7 @@ class UsersController < ApplicationController
     render file: 'errors/not_found', status: 404 if current_user.nil?
     if current_user && params[:id]
       if current_admin? || (current_user.id == params[:id].to_i)
-        @user = User.find(params[:id])
+        @user = User.slug_find(params[:id])
 
         if current_admin? && params[:toggle]
           if params[:toggle] == 'enable'
@@ -66,7 +66,8 @@ class UsersController < ApplicationController
         else
           if @user.update(user_params)
             flash[:success] = 'Profile data was successfully updated.'
-            redirect_to current_admin? ? user_path(@user) : profile_path
+            @user.reload
+            redirect_to current_admin? ? user_path(@user.path_keys) : profile_path
           else
             render :edit
           end
@@ -95,6 +96,6 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation, :name, :address, :city, :state, :zip)
+      params.require(:user).permit(:email, :password, :password_confirmation, :slug, :name, :address, :city, :state, :zip)
     end
 end

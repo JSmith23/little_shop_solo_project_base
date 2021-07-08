@@ -16,6 +16,13 @@
     <%= f.text_field :email %>
   </div>
 
+  <% if current_admin? %>
+    <div class="field">
+      <%= f.label :slug %>
+      <%= f.text_field :slug %>
+    </div>
+  <% end %>
+
   <div class="field">
     <%= f.label :password %>
     <%= f.text_field :password %>

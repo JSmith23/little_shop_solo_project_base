@@ -8,25 +8,25 @@ class ItemsController < ApplicationController
       @slowest_merchants = User.slowest_merchants(3)
   end
 
-  def new 
-    @item = Item.new 
+  def new
+    @item = Item.new
     @merchant = User.find(params[:merchant_id])
     @form_url = merchant_items_path
   end
 
   def show
-    @item = Item.find(params[:id])
+    @item = Item.slug_find(params[:id])
   end
 
-  def edit 
+  def edit
     render file: 'errors/not_found', status: 404 if current_user.nil?
     @merchant = User.find(params[:merchant_id])
     render file: 'errors/not_found', status: 404 unless current_admin? || current_user == @merchant
-    @item = Item.find(params[:id])
+    @item = Item.slug_find(params[:id])
     @form_url = merchant_item_path(@merchant, @item)
   end
 
-  def create 
+  def create
     render file: 'errors/not_found', status: 404 if current_user.nil?
     @merchant = User.find(params[:merchant_id])
     render file: 'errors/not_found', status: 404 unless current_admin? || current_user == @merchant
@@ -45,14 +45,14 @@ class ItemsController < ApplicationController
     end
   end
 
-  def update 
+  def update
     render file: 'errors/not_found', status: 404 if current_user.nil?
     @merchant = User.find(params[:merchant_id])
     item_id = :item_id
     if params[:id]
       item_id = :id
     end
-    @item = Item.find(params[item_id])
+    @item = Item.slug_find(params[item_id])
     render file: 'errors/not_found', status: 404 unless current_admin? || current_user == @merchant
 
     if request.fullpath.split('/')[-1] == 'disable'
@@ -80,6 +80,6 @@ class ItemsController < ApplicationController
 
   private
     def item_params
-      params.require(:item).permit(:user_id, :name, :description, :image, :price, :inventory)
+      params.require(:item).permit(:user_id, :name, :description, :image, :price, :inventory, :slug)
     end
 end

@@ -13,10 +13,10 @@ merchant_1 = create(:merchant)
 
 merchant_2, merchant_3, merchant_4 = create_list(:merchant, 3)
 
-item_1 = create(:item, user: merchant_1)
-item_2 = create(:item, user: merchant_2)
-item_3 = create(:item, user: merchant_3)
-item_4 = create(:item, user: merchant_4)
+item_1 = create(:item, slug: 'item_1', user: merchant_1)
+item_2 = create(:item, slug: 'item_2', user: merchant_2)
+item_3 = create(:item, slug: 'item_3', user: merchant_3)
+item_4 = create(:item, slug: 'item_4', user: merchant_4)
 create_list(:item, 10, user: merchant_1)
 
 order = create(:completed_order, user: user)

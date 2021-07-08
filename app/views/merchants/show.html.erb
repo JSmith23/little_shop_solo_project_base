@@ -1,6 +1,6 @@
 <h1>Merchant Dashboard</h1>
 
-<p><%= link_to "Edit Profile Data", current_admin? ? edit_user_path(@merchant.id) : profile_edit_path %></p>
+<p><%= link_to "Edit Profile Data", current_admin? ? edit_user_path(@merchant.path_keys) : profile_edit_path %></p>
 <p><%= link_to 'My Items for Sale', current_admin? ? merchant_items_path(@merchant) : dashboard_items_path %>
 
 <div id="stats">
@@ -11,7 +11,7 @@
   </div>
   <div id="shipping-stats">
     <h3>Shipping Stats</h3>
-    
+
     <div id='stats-top-states'>
     <p>Top 3 States:</p>
       <% if @top_3_shipping_states %>
@@ -24,7 +24,7 @@
       <p>(none yet)</p>
       <% end %>
     </div>
-    
+
     <div id='stats-top-cities'>
     <p>Top 3 Cities:</p>
       <% if @top_3_shipping_cities %>
@@ -84,9 +84,9 @@
 
 <% if current_admin? %>
   <% if @merchant.active %>
-  <%= button_to "Disable", user_path(@merchant), method: :patch, params: { toggle: :disable } %>
+  <%= button_to "Disable", user_path(@merchant.path_keys), method: :patch, params: { toggle: :disable } %>
   <% else %>
-  <%= button_to "Enable", user_path(@merchant), method: :patch, params: { toggle: :enable } %>
+  <%= button_to "Enable", user_path(@merchant.path_keys), method: :patch, params: { toggle: :enable } %>
   <% end %>
-  <%= button_to "Upgrade to Merchant", user_path(@merchant), method: :patch, params: { toggle: :role } %> 
+  <%= button_to "Upgrade to Merchant", user_path(@merchant.path_keys), method: :patch, params: { toggle: :role } %>
 <% end %>

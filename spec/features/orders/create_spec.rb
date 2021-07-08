@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe 'Create Order' do 
+RSpec.describe 'Create Order' do
   context 'as a registered user' do
-    it 'allows me to check out and create an order' do 
+    it 'allows me to check out and create an order' do
       merchant = create(:merchant)
       active_item = create(:item, user: merchant)
       inactive_item = create(:inactive_item, name: 'inactive item 1')
@@ -10,9 +10,9 @@ RSpec.describe 'Create Order' do
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
 
       item_1, item_2 = create_list(:item, 2, user: merchant)
-      visit item_path(item_1)
+      visit item_path(item_1.path_keys)
       click_button("Add to Cart")
-      visit item_path(item_2)
+      visit item_path(item_2.path_keys)
       click_button("Add to Cart")
 
       visit carts_path
@@ -33,11 +33,11 @@ RSpec.describe 'Create Order' do
       merchant = create(:merchant)
       user = create(:user)
       item_1, item_2 = create_list(:item, 2, user: merchant)
-      
+
       order_1 = create(:order, user: user)
       create(:order_item, order: order_1, item: item_1)
       create(:order_item, order: order_1, item: item_2)
-  
+
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(user)
       visit profile_orders_path
       expect(page).to_not have_content("no orders yet")
@@ -75,16 +75,16 @@ RSpec.describe 'Create Order' do
       expect(page).to_not have_button('Cancel Order')
     end
   end
-  context 'mixed user login workflow' do 
+  context 'mixed user login workflow' do
     it 'a cancelled order with fulfilled items puts inventory back' do
       merchant = create(:merchant)
       user = create(:user)
       item_1, item_2 = create_list(:item, 2, user: merchant)
-      
+
       order_1 = create(:order, user: user)
       oi_1 = create(:order_item, order: order_1, item: item_1)
       create(:order_item, order: order_1, item: item_2)
-  
+
       # as a merchant, fulfill part of an order and verify
       # that inventory level has changed
       allow_any_instance_of(ApplicationController).to receive(:current_user).and_return(merchant)

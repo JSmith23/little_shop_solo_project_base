@@ -70,7 +70,7 @@
 
 <br style="clear: both;">
 
-<% if current_user && current_user.merchant? %>
+<% if current_user && current_user.merchant? || current_admin? %>
 <%= link_to 'Add New Item', new_merchant_item_path(current_user) %>
 <% end %>
 
@@ -79,15 +79,15 @@
 <% @items.each do |item| %>
 
 <div class="card float-left m-3" style="width: 18rem;">
-  <a href="<%= item_path(item) %>">
+  <a href="<%= item_path(item.path_keys) %>">
   <img class="card-img-top" id="item-image-<%= item.id %>" alt="image for <%= item.name %>" src="<%= item.image %>" width="200" />
   </a>
 
   <div class="card-body" id="item-<%= item.id %>">
     <h5 class="card-title">
-      <%= link_to item.name, item_path(item), class: 'card-link' %>
+      <%= link_to item.name, item_path(item.path_keys), class: 'card-link' %>
       <% if current_admin? || current_user == item.user %>
-      <%= link_to "ID: #{item.id}", item_path(item) %>
+      <%= link_to "ID: #{item.id}", item_path(item.path_keys) %>
       <% end %>
     </h5>
     <img class="card-img-top" id="item-image-<%= item.id %>" alt="image for <%= item.name %>" src="<%= item.image %>" width="0" />
